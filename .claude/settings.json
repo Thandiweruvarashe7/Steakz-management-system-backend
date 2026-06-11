@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(cd \"/c/Code/MIS-FinalAssignment/Steaks Restaurant/backendsteaks\" && ls node_modules 2>/dev/null | head -5 && echo \"node_modules exists\" || echo \"node_modules not ready yet\")",
+      "Read(//c/c/Code/MIS-FinalAssignment/Steaks Restaurant/backendsteaks/**)",
+      "Bash(npx tsc *)",
+      "Bash(npm config *)",
+      "Bash(npx prisma *)",
+      "Bash(NODE_TLS_REJECT_UNAUTHORIZED=0 npx prisma generate)",
+      "Bash(NODE_TLS_REJECT_UNAUTHORIZED=0 npx tsc --noEmit)",
+      "Bash(netstat -ano)",
+      "Bash(findstr \":5000\")",
+      "Bash(taskkill /PID 1124 /F)",
+      "Bash(cmd /c \"taskkill /PID 1124 /F\")"
+    ]
+  }
+}
