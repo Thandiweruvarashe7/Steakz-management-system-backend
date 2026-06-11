@@ -188,30 +188,26 @@ async function main() {
   console.log(`✓ Tables: ${tablesCreated} created`);
 
   // ── 4. Inventory (per branch) ─────────────────────────────────────────────
+  // Use explicit findFirst → create/update to avoid the upsert({ where: { id: 'new' } })
+  // pattern which can create duplicates if the seed is run twice concurrently or rapidly.
   let invCreated = 0;
   let invUpdated = 0;
   for (const { slug } of BRANCHES) {
     const branchId = branchIdMap.get(slug)!;
     for (const inv of INVENTORY_ITEMS) {
-      const existingItem = await (prisma.inventory as any).findFirst({ where: { branchId, name: inv.name } });
-      await (prisma.inventory as any).upsert({
-        where: { id: existingItem?.id ?? 'new' },
-        create: {
-          branchId,
-          name: inv.name,
-          category: inv.category,
-          unit: inv.unit,
-          quantity: inv.quantity,
-          minimumStock: inv.minimumStock,
-        },
-        update: {
-          category: inv.category,
-          unit: inv.unit,
-          quantity: inv.quantity,
-          minimumStock: inv.minimumStock,
-        },
-      });
-      if (existingItem) invUpdated++; else invCreated++;
+      const existingItem = await prisma.inventory.findFirst({ where: { branchId, name: inv.name } });
+      if (existingItem) {
+        await prisma.inventory.update({
+          where: { id: existingItem.id },
+          data: { category: inv.category, unit: inv.unit, quantity: inv.quantity, minimumStock: inv.minimumStock },
+        });
+        invUpdated++;
+      } else {
+        await prisma.inventory.create({
+          data: { branchId, name: inv.name, category: inv.category, unit: inv.unit, quantity: inv.quantity, minimumStock: inv.minimumStock },
+        });
+        invCreated++;
+      }
     }
   }
   console.log(`✓ Inventory: ${invCreated} items created, ${invUpdated} updated`);
