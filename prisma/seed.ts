@@ -61,6 +61,27 @@ const INVENTORY_ITEMS = [
   // Water — bottle
   { name: 'Still Water',       category: 'Water',       unit: 'bottle',  quantity: 300, minimumStock: 50  },
   { name: 'Sparkling Water',   category: 'Water',       unit: 'bottle',  quantity: 200, minimumStock: 30  },
+  // Starters — all five from the menu
+  { name: 'Garlic Bread',          category: 'Starters',    unit: 'serving', quantity: 200, minimumStock: 30 },
+  { name: 'Loaded Fries',          category: 'Starters',    unit: 'serving', quantity: 200, minimumStock: 30 },
+  { name: 'Chicken Wings',         category: 'Starters',    unit: 'serving', quantity: 150, minimumStock: 20 },
+  { name: 'Prawn Cocktail',        category: 'Starters',    unit: 'serving', quantity: 150, minimumStock: 20 },
+  { name: 'Soup of the Day',       category: 'Starters',    unit: 'serving', quantity: 100, minimumStock: 15 },
+  // Steaks — T-Bone and Tomahawk were missing
+  { name: 'T-Bone Steak',          category: 'Main Meals',  unit: 'serving', quantity: 300, minimumStock: 30 },
+  { name: 'Tomahawk Steak',        category: 'Main Meals',  unit: 'serving', quantity: 100, minimumStock: 10 },
+  // Mains — Lamb Chops and Fish and Chips had no inventory at all
+  { name: 'Lamb Chops',            category: 'Main Meals',  unit: 'serving', quantity: 150, minimumStock: 20 },
+  { name: 'Fish and Chips',        category: 'Main Meals',  unit: 'serving', quantity: 150, minimumStock: 20 },
+  // Desserts — three items from the menu had no inventory
+  { name: 'Chocolate Lava Cake',   category: 'Desserts',    unit: 'serving', quantity: 150, minimumStock: 20 },
+  { name: 'Sticky Toffee Pudding', category: 'Desserts',    unit: 'serving', quantity: 150, minimumStock: 20 },
+  { name: 'Apple Crumble',         category: 'Desserts',    unit: 'serving', quantity: 150, minimumStock: 20 },
+  // Drinks — hot drinks and specials had no inventory
+  { name: 'Coffee',                category: 'Hot Drinks',  unit: 'cup',     quantity: 500, minimumStock: 50 },
+  { name: 'Tea',                   category: 'Hot Drinks',  unit: 'cup',     quantity: 500, minimumStock: 50 },
+  { name: 'Mocktails',             category: 'Soft Drinks', unit: 'glass',   quantity: 200, minimumStock: 30 },
+  { name: 'Milkshakes',            category: 'Soft Drinks', unit: 'glass',   quantity: 200, minimumStock: 30 },
 ];
 
 // ── Employee accounts ─────────────────────────────────────────────────────────
