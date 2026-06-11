@@ -1,3 +1,13 @@
+// ──────────────────────────────────────────────────────────────────────────────
+// routes/inventory.ts
+//
+// Routes for managing stock in the kitchen — ingredients, drinks, sides, etc.
+// Branch managers can view and update their branch's inventory.
+// Only ADMIN can delete inventory items (dangerous operation).
+//
+// All routes here are under /api/inventory (set in app.ts).
+// ──────────────────────────────────────────────────────────────────────────────
+
 import { Router } from 'express';
 import { body } from 'express-validator';
 import {
@@ -11,6 +21,10 @@ import { validate } from '../middleware/validate';
 
 const router = Router();
 
+// ── GET /api/inventory ────────────────────────────────────────────────────────
+// Returns all inventory items for the user's branch.
+// Branch managers automatically see only their branch.
+// HQ and admins can pass ?branchId= to see a specific branch.
 router.get(
   '/',
   verifyToken,
@@ -18,6 +32,9 @@ router.get(
   getInventory
 );
 
+// ── POST /api/inventory ───────────────────────────────────────────────────────
+// Adds a new inventory item to a branch (e.g. "Ribeye Steak — 500 servings").
+// Also creates the first stock-in transaction automatically.
 router.post(
   '/',
   verifyToken,
@@ -32,6 +49,10 @@ router.post(
   createInventoryItem
 );
 
+// ── PUT /api/inventory/:id ────────────────────────────────────────────────────
+// Updates an inventory item — used to restock (IN), record usage (OUT),
+// or manually adjust the quantity (ADJUSTMENT).
+// Branch managers can only update items in their own branch.
 router.put(
   '/:id',
   verifyToken,
@@ -39,7 +60,9 @@ router.put(
   updateInventoryItem
 );
 
-// PATCH alias — frontend uses PATCH for partial updates
+// ── PATCH /api/inventory/:id ──────────────────────────────────────────────────
+// Same as PUT above — the frontend uses PATCH for partial updates.
+// Both are handled by the same controller function (updateInventoryItem).
 router.patch(
   '/:id',
   verifyToken,
@@ -47,6 +70,9 @@ router.patch(
   updateInventoryItem
 );
 
+// ── DELETE /api/inventory/:id ─────────────────────────────────────────────────
+// Permanently removes an inventory item and all its transaction history.
+// Restricted to ADMIN only — this is a destructive operation.
 router.delete(
   '/:id',
   verifyToken,
