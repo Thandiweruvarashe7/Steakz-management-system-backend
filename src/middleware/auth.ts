@@ -69,7 +69,7 @@ export const requireRole = (...roles: UserRole[]) => {
     }
 
     // Check if the user's role is in the allowed list.
-    // e.g. if roles = ['ADMIN', 'HQ_MANAGER'] and user.role = 'CHEF', this fails.
+
     if (!roles.includes(req.user.role)) {
       res.status(403).json({ message: 'Insufficient permissions' });
       return;
@@ -80,9 +80,7 @@ export const requireRole = (...roles: UserRole[]) => {
   };
 };
 
-// ── Guard 3: requireBranchAccess ─────────────────────────────────────────────
-// Think of this like a key card for a specific office floor.
-// A branch manager can only enter their own floor, not another branch's.
+
 // ADMIN and HQ_MANAGER have a master key and can access any branch.
 export const requireBranchAccess = (req: AuthRequest, res: Response, next: NextFunction): void => {
   // Must be logged in first.
@@ -106,7 +104,6 @@ export const requireBranchAccess = (req: AuthRequest, res: Response, next: NextF
   }
 
   // Work out which branch the request is trying to access.
-  // It could come from the URL (/api/branches/:branchId), the request body, or a query param.
   const requestedBranchId =
     req.params.branchId ||
     (req.body as { branchId?: string }).branchId ||

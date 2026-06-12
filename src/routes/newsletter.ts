@@ -1,14 +1,4 @@
-// ──────────────────────────────────────────────────────────────────────────────
-// routes/newsletter.ts
-//
-// A single route for newsletter sign-ups on the Steakz website.
-// Visitors can enter their email (and optionally their name) to subscribe.
-//
-// No login required — this is a public-facing form.
-// The email is saved to the NewsletterSubscription table in the database.
-//
-// All routes here are under /api/newsletter (set in app.ts).
-// ──────────────────────────────────────────────────────────────────────────────
+
 
 import { Router, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
@@ -16,13 +6,9 @@ import prisma from '../config/database';
 
 const router = Router();
 
-// A simple regular expression (pattern) that checks whether a string looks like
-// a valid email address — must have characters, an @, a domain, and a dot.
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// ── POST /api/newsletter ──────────────────────────────────────────────────────
-// Subscribes an email address to the newsletter.
-// PUBLIC — no login required (anyone on the website can sign up).
+
 router.post(
   '/',
   [body('email').isEmail().normalizeEmail().withMessage('Please enter a valid email address')],
@@ -56,7 +42,7 @@ router.post(
       await (prisma.newsletterSubscription as any).create({ data: { email, name: name ?? null } });
       console.log('[NEWSLETTER] New subscription saved to DB:', email, name ?? '(no name)', new Date().toISOString());
 
-      // 201 Created = "successfully saved a new record"
+      
       res.status(201).json({ success: true, message: 'Successfully subscribed to the Steakz UK Newsletter.' });
     } catch (error) {
       console.error('[NEWSLETTER] Error:', (error as any)?.message, error);
